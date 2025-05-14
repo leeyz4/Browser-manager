@@ -1,0 +1,155 @@
+body{
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(180deg, #040918 0%, #091540 100%);
+    color: white;
+}
+
+.container{
+    padding: 20px;
+}
+
+.navbar{
+    background-color: hsl(225, 23%, 24%);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 30px;
+   
+}
+
+.sun{
+    background-color: hsl(226, 11%, 37%);
+    padding: 7px;
+    border-radius: 10px;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-header{
+    margin-bottom: 20px;
+    padding-left: 170px;
+}
+
+.right-header{
+    display: flex;
+    gap: 10px;
+    padding-right: 170px;
+}
+
+.all{
+    background-color: hsl(226, 11%, 37%);
+    border-radius: 15px;
+    padding: 10px;
+    cursor: pointer;
+    
+}
+
+.all:hover{
+    background-color: hsl(3, 71%, 56%);
+}
+
+.active{
+    background-color: hsl(226, 11%, 37%);
+    border-radius: 15px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.active:hover{
+    background-color: hsl(3, 71%, 56%);
+}
+
+.inactive{
+    background-color: hsl(226, 11%, 37%);
+    border-radius: 15px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.inactive:hover{
+    background-color: hsl(3, 71%, 56%);
+   
+}
+
+.bottom button{
+    background-color: hsl(227, 75%, 14%);
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+}
+
+i{
+   color: hsl(3, 71%, 56%);
+}
+
+main{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+   
+    padding: 32px;
+}
+
+.card{
+    background-color:  hsl(226, 11%, 37%);
+    border-radius: 15px;
+    padding: 10px;
+    width: 345px;
+    height: 150px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 100%;
+}
+
+.card:hover{
+    background-color:hsl(0, 0%, 78%);
+}
+
+.top{
+   display: flex;
+   justify-content: center;
+   align-items: flex-start;
+   gap: 1rem;
+}
+
+.content h3{
+    margin: 0;
+}
+
+.content p{
+    margin-top: 0.3rem;
+}
+
+.bottom{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+a{
+    color: rgb(45, 140, 180);
+}
+
+.light-mode{
+    background: linear-gradient(180deg, #EBF2FC 0%, #EEF8F9 100%);
+    color: black;
+}
+
+.light-mode .card{
+    background-color: hsl(227, 75%, 14%);
+    border-color: hsl(226, 11%, 37%);
+}
+
+
