@@ -1,0 +1,135 @@
+
+
+
+
+
+  document.addEventListener('DOMContentLoaded', () => {
+    let extensions = [];
+    let currentFilter = 'all';
+    let isDarkTheme = false;
+  
+    const extensionsContainer = document.getElementById('extensions-container');
+    const filterButtons = document.querySelectorAll('.btn');
+    const themeToggle = document.getElementById('theme-toggle');
+  
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      isDarkTheme = true;
+    }
+  
+    async function fetchExtensions() {
+      try {
+        const response = await fetch('./data.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch extensions data');
+        }
+        extensions = await response.json();
+        renderExtensions();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        extensionsContainer.innerHTML = '<p>Failed to load extensions. Please try again later.</p>';
+      }
+    }
+  
+    function renderExtensions() {
+      extensionsContainer.innerHTML = '';
+      
+      const filteredExtensions = extensions.filter(ext => {
+        if (currentFilter === 'all') return true;
+        if (currentFilter === 'active') return ext.isActive;
+        if (currentFilter === 'inactive') return !ext.isActive;
+        return true;
+      });
+  
+      if (filteredExtensions.length === 0) {
+        extensionsContainer.innerHTML = `<p>No ${currentFilter} extensions found.</p>`;
+        return;
+      }
+  
+      filteredExtensions.forEach(ext => {
+        const card = document.createElement('div');
+        card.className = 'extension-card';
+        card.dataset.id = ext.name;
+        
+        card.innerHTML = `
+          <div class="extension-info">
+            <div class="extension-logo">
+              <img src="${ext.logo}" alt="${ext.name} logo">
+            </div>
+            <div class="extension-details">
+              <h3 class="extension-name">${ext.name}</h3>
+              <p class="extension-description">${ext.description}</p>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="remove-btn">Remove</button>
+            <label class="toggle-switch">
+              <input type="checkbox" ${ext.isActive ? 'checked' : ''}>
+              <span class="slider"></span>
+            </label>
+          </div>
+        `;
+  
+        const removeBtn = card.querySelector('.remove-btn');
+        removeBtn.addEventListener('click', () => removeExtension(ext.name));
+  
+        const toggleSwitch = card.querySelector('input[type="checkbox"]');
+        toggleSwitch.addEventListener('change', () => toggleExtensionStatus(ext.name));
+  
+        extensionsContainer.appendChild(card);
+      });
+    }
+  
+    function toggleExtensionStatus(name) {
+      extensions = extensions.map(ext => {
+        if (ext.name === name) {
+          return { ...ext, isActive: !ext.isActive };
+        }
+        return ext;
+      });
+      
+      renderExtensions();
+    }
+  
+    function removeExtension(name) {
+      extensions = extensions.filter(ext => ext.name !== name);
+      renderExtensions();
+    }
+  
+  
+    function filterExtensions(filter) {
+      currentFilter = filter;
+      
+      filterButtons.forEach(btn => {
+        if (btn.dataset.filter === filter) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+      
+      renderExtensions();
+    }
+  
+    function toggleTheme() {
+      isDarkTheme = !isDarkTheme;
+      
+      if (isDarkTheme) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.documentElement.removeAttribute('data-theme');
+        localStorage.setItem('theme', 'light');
+      }
+    }
+  
+  
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => filterExtensions(btn.dataset.filter));
+    });
+  
+    themeToggle.addEventListener('click', toggleTheme);
+  
+    fetchExtensions();
+  });
